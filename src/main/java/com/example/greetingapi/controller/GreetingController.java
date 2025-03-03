@@ -38,4 +38,13 @@ public class GreetingController {
     public Greeting getGreetingFromService() {
         return new Greeting(greetingService.getGreetingMessage());
     }
+
+    @GetMapping("/personalized")
+    public Greeting getPersonalizedGreeting(
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName) {
+
+        String message = greetingService.getGreetingMessage(firstName, lastName);
+        return new Greeting(message);
+    }
 }
