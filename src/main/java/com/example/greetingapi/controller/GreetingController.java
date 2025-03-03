@@ -4,6 +4,8 @@ import com.example.greetingapi.model.Greeting;
 import com.example.greetingapi.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
@@ -46,5 +48,18 @@ public class GreetingController {
 
         String message = greetingService.getGreetingMessage(firstName, lastName);
         return new Greeting(message);
+    }
+
+    @PostMapping("/create")
+    public Greeting createGreeting(
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName) {
+
+        return greetingService.saveGreeting(firstName, lastName);
+    }
+
+    @GetMapping("/all")
+    public List<Greeting> getAllGreetings() {
+        return greetingService.getAllGreetings();
     }
 }
